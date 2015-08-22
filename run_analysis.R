@@ -14,15 +14,25 @@ list_of_train_data <- lapply(train_files, readTxt)
 test_data <- do.call(cbind,list_of_test_data)
 train_data <- do.call(cbind,list_of_train_data)
 
+# Step 1
 uci_data <- rbind(test_data,train_data)
 uci_header <- cbind("Subject",t(features_header),"Activity")
 names(uci_data) <- uci_header
 
-mean_list <- grepl("[Mm]ean",uci_header)
-std_list <- grepl("[Ss]td",uci_header)
+# Step 2
+mean_list <- grepl("mean\\(\\)",uci_header)
+std_list <- grepl("std\\(\\)",uci_header)
 df_list <- mean_list | std_list
 df_list[c(1,563)] <- TRUE
-
 uci_tidy_data <- uci_data[,uci_header[df_list]]
+
+# Step 3
 uci_tidy_data <- within(uci_tidy_data, Activity <- factor(Activity, labels = activity_labels))
-names(uci_tidy_data) <- sub("\\(\\)","",names(uci_tidy_data))
+
+# Step 4
+uci_tidy_header <- sub("\\(\\)","",names(uci_tidy_data))
+uci_tidy_header <- sub("BodyBody{1}","Body",uci_tidy_header)
+uci_tidy_header <- sub("Acc{1}","Linear",uci_tidy_header)
+uci_tidy_header <- sub("Gyro{1}","Angular",uci_tidy_header)
+uci_tidy_header <- sub("Mag{1}","Magnitude",uci_tidy_header)
+names(uci_tidy_data) <- uci_tidy_header
