@@ -1,16 +1,23 @@
 library (reshape2)
+
+# Importing the function to read the text files
 source("./readTxt.R")
+
+# Reading the absolute path files in a list
 test_files <- list.files("./UCI HAR Dataset/test/",recursive = FALSE,pattern = "*.txt",full.names = TRUE)
 train_files <- list.files("./UCI HAR Dataset/train/",recursive = FALSE, pattern = "*.txt",full.names = TRUE)
 
+# Reading the contents of features and activity files and converting them to character array
 features <- read.table("./UCI HAR Dataset/features.txt",header = FALSE)
 features_header <- as.character(features[,2])
 activity <- read.table("./UCI HAR Dataset/activity_labels.txt",header = FALSE)
 activity_labels <- as.character(activity[,2])
 
+# Apply the function readTxt to all the files in the path read above
 list_of_test_data <- lapply(test_files, readTxt)
 list_of_train_data <- lapply(train_files, readTxt)
 
+# Binding the Subject, X and Y files using cbind to form a test and train data
 test_data <- do.call(cbind,list_of_test_data)
 train_data <- do.call(cbind,list_of_train_data)
 
