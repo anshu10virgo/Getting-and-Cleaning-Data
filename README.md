@@ -10,7 +10,7 @@ Steps to run:
 * There is one other script named 'readTxt.R' which contain a function to read the files in train and test data in one go. So this function need to be loaded first in the workspace. Code for this is already included in the run_analysis.R
 
 * To read the tidy dataset (named uci_final_dataset.txt) into workspace that is submitted in the project use the following command:
-read.table ("uci_tidy_data.txt",header = TRUE)
+read.table ("uci_final_dataset.txt",header = TRUE)
 
 =========================================================================
 Assumptions:
